@@ -73,27 +73,25 @@ class Purger
             return;
         }
 
+        /** @var DataObject|FluentExtension|Versioned $obj */
+        $obj = Injector::inst()->get($class);
+        $hasVersionedExtension = $obj->hasExtension(Versioned::class);
+        $versionedTables = [];
+
         // First delete the base classes
         $tableClasses = ClassInfo::ancestry($class, true);
         foreach ($tableClasses as $tableClass) {
             $table = DataObject::getSchema()->tableName($tableClass);
             self::truncateTable($table);
-        }
 
-        /** @var DataObject|FluentExtension|Versioned $obj */
-        $obj = Injector::inst()->get($class);
+            if ($hasVersionedExtension) {
+                $stages = $obj->getVersionedStages();
 
-        $versionedTables = [];
-        $hasVersionedExtension = $obj->hasExtension(Versioned::class);
-
-        if ($hasVersionedExtension) {
-            $baseTableName = Config::inst()->get($class, 'table_name');
-            $stages = $obj->getVersionedStages();
-
-            foreach ($stages as $stage) {
-                $table = $obj->stageTable($baseTableName, $stage);
-                self::truncateTable($table);
-                $versionedTables[] = $table;
+                foreach ($stages as $stage) {
+                    $tableName = $obj->stageTable($table, $stage);
+                    self::truncateTable($tableName);
+                    $versionedTables[] = $tableName;
+                }
             }
         }
 
