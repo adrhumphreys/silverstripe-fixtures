@@ -79,7 +79,9 @@ class Loader
             $reflClass = new ReflectionClass($className);
             $sourceFile = $reflClass->getFileName();
 
-            if (!in_array($sourceFile, $includedFiles) || $reflClass->isAbstract()) {
+            if (!in_array($sourceFile, $includedFiles)
+                || $reflClass->isAbstract()
+                || !is_subclass_of($className, FixtureInterface::class)) {
                 continue;
             }
 
