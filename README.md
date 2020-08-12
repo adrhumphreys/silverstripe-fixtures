@@ -12,7 +12,19 @@ Fixtures for all mixtures 👋
 composer require adrhumphreys/silverstripe-fixtures dev-master
 ```
 
-If you are installing this as a dev dependency then **all** your fixtures will need to implement `\SilverStripe\Dev\TestOnly` this is due to Silverstripe trying to load every class on dev/build to create it's manifest. During that process it will try to load the class which will then try to load `AdrHumphreys\Fixtures\AbstractFixture` which doesn't exist.
+### Installing as a dev only module:
+When running `dev/build` Silverstripe framework will try to load all classes into it's ClassManifest to cache them and allow for functionality such as dependency injection. During that process it will try to load your Fixture class which will then try to load `AdrHumphreys\Fixtures\AbstractFixture` which doesn't exist. This will throw and exception and stop the `dev/build` process.
+
+You have some options to remedy this, ranked from best to worst:
+
+**Option 1: Place your fixtures in the `tests` directory for your project**:
+These are designed to be run on a test/dev environment only and the code is more reference than implementation specific. It therefore makes sense to move these files into this directory. Why? It's explicitly ignored when finding files via `ManifestFileFinder`
+
+**Option 2: Add `_manifest_exclude` to the fixture directory**:
+This will ensure that `ManifestFileFinder` will ignore files in the directory. This is option 2 because it makes it easier for code that is test only to end up being relied upon by production code which should never be the case
+
+**Option 3: Add `implements TestOnly` to all fixtures**
+If you are installing this as a dev dependency then **all** your fixtures will need to implement `\SilverStripe\Dev\TestOnly` this is specifically excluded from Silverstripes class manifest loader
 
 ## How to use
 The default setup is to run this as a task like so:
