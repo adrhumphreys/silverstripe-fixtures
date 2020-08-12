@@ -12,6 +12,8 @@ Fixtures for all mixtures 👋
 composer require adrhumphreys/silverstripe-fixtures dev-master
 ```
 
+If you are installing this as a dev dependency then **all** your fixtures will need to implement `\SilverStripe\Dev\TestOnly` this is due to Silverstripe trying to load every class on dev/build to create it's manifest. During that process it will try to load the class which will then try to load `AdrHumphreys\Fixtures\AbstractFixture` which doesn't exist.
+
 ## How to use
 The default setup is to run this as a task like so:
 ```
@@ -27,8 +29,9 @@ A basic fixture looks like the following:
 namespace App\Fixtures;
 
 use AdrHumphreys\Fixtures\AbstractFixture;
+use SilverStripe\Dev\TestOnly;
 
-class PageFixture extends AbstractFixture
+class PageFixture extends AbstractFixture implements TestOnly
 {
     public function load(): void
     {
@@ -61,8 +64,9 @@ namespace App\Fixtures;
 
 use AdrHumphreys\Fixtures\AbstractFixture;
 use AdrHumphreys\Fixtures\DependentFixtureInterface;
+use SilverStripe\Dev\TestOnly;
 
-class MyOtherPageFixture extends AbstractFixture implements DependentFixtureInterface
+class MyOtherPageFixture extends AbstractFixture implements DependentFixtureInterface, TestOnly
 {
     public function load(): void
     {
@@ -85,8 +89,9 @@ namespace App\Fixtures;
 
 use AdrHumphreys\Fixtures\AbstractFixture;
 use AdrHumphreys\Fixtures\OrderedFixtureInterface;
+use SilverStripe\Dev\TestOnly;
 
-class PageFixture extends AbstractFixture implements OrderedFixtureInterface
+class PageFixture extends AbstractFixture implements OrderedFixtureInterface, TestOnly
 {
     public function load(): void
     {
@@ -108,8 +113,9 @@ During the load you can store a reference to a fixture by adding it to the inter
 namespace App\Fixtures;
 
 use AdrHumphreys\Fixtures\AbstractFixture;
+use SilverStripe\Dev\TestOnly;
 
-class PageFixture extends AbstractFixture
+class PageFixture extends AbstractFixture implements TestOnly
 {
     public const PAGE_REF = 'my-page-ref';
 
@@ -133,8 +139,9 @@ You'd then use it by calling `$this->getByReference(string $identifier)`. Exampl
 namespace App\Fixtures;
 
 use AdrHumphreys\Fixtures\AbstractFixture;
+use SilverStripe\Dev\TestOnly;
 
-class PageFixtureTwo extends AbstractFixture
+class PageFixtureTwo extends AbstractFixture implements TestOnly
 {
     public function load(): void
     {
