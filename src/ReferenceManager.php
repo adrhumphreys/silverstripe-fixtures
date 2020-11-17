@@ -54,7 +54,7 @@ class ReferenceManager
             return $existingAsset;
         }
 
-        $asset = Injector::inst()->createWithArgs($className, []);
+        $asset = Injector::inst()->create($className);
         $asset->setFromLocalFile($path);
 
         foreach ($params as $param => $value) {
@@ -91,7 +91,7 @@ class ReferenceManager
             return $currentRef;
         }
 
-        $object = Injector::inst()->createWithArgs($className, []);
+        $object = Injector::inst()->create($className);
 
         foreach ($params as $key => $param) {
             $object->$key = $param;
