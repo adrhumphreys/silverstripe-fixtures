@@ -191,7 +191,7 @@ You can create assets really easily like so:
 \AdrHumphreys\Fixtures\ReferenceManager::findOrMakeAsset('my-asset-id', 'file/path.jpg');
 ```
 
-This will create the image, and store it with a reference of `my-asset-id`. You can also pass through as a third argument an array of params e.g. `['Title' => 'my asset title']` this will be translated to `$image->Title = 'my asset title'` so is case-sensitive. The function will also return the stored image.
+This will create the image, and store it with a reference of `my-asset-id`. You can also pass through as a third argument an array of params e.g. `['Title' => 'my asset title']` this will be translated to `$image->Title = 'my asset title'` so is case-sensitive. The function will also return the stored image. The fourth argument allows you to specify another Asset type eg SilverStripe\Assets\File.
 
 You can then access the asset through `$this->getByReference('my-asset-id')`
 
