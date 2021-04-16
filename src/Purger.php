@@ -90,7 +90,7 @@ class Purger
                 foreach ($stages as $stage) {
                     $tableName = $obj->stageTable($table, $stage);
                     self::truncateTable($tableName);
-                    $versionedTables[] = $tableName;
+                    $versionedTables[] = $table;
                 }
             }
         }
@@ -110,7 +110,8 @@ class Purger
 
             if ($hasVersionedExtension) {
                 foreach ($versionedTables as $versionedTable) {
-                    $table = $obj->getLocalisedTable($versionedTable);
+                    $localisedTable = $obj->getLocalisedTable($versionedTable);
+                    $table = $obj->stageTable($localisedTable, $stage);
                     self::truncateTable($table);
                 }
             }
