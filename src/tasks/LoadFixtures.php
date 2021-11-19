@@ -42,7 +42,9 @@ class LoadFixtures extends BuildTask
 
         $onlyPurge = $request->getVar('onlyPurge') === 'true';
 
-        if($append && $onlyPurge) {
+        $filter = $request->getVar('filter') ?? null;
+
+        if ($append && $onlyPurge) {
             Logger::log("You've asked for nothing...");
 
             return;
@@ -55,7 +57,7 @@ class LoadFixtures extends BuildTask
         }
 
         $loader = new Loader();
-        $loader->loadFromDirectory($directory);
+        $loader->loadFromDirectory($directory, $filter);
         $purger = new Purger();
         $executor = new Executor($purger);
         $executor->execute($loader->getFixtures(), $append, $onlyPurge);
