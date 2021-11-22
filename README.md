@@ -186,6 +186,21 @@ vendor/bin/sake dev/tasks/load-fixtures directory=app/src/fixtures purgeOnly=tru
 ```
 
 ### Quality of life functionality:
+
+#### Filtering
+
+You can selectively run fixtures using the filter param:
+
+```bash
+vendor/bin/sake dev/tasks/load-fixtures directory=app/src/fixtures filter=/PageFixtureTwo/
+```
+
+This will run any fixture matching the filter pattern *and any [dependencies](#dependant-fixtures)*. Note that you may filter out [ordered fixtures](#ordered-fixtures) and these won't be automatically resolved like dependencies.
+
+The filter pattern must be a valid pattern for [preg_match](https://www.php.net/manual/en/function.preg-match.php) including a delimiter. The pattern is matched against the fully qualified class name (eg `App\My\Fixture`).
+
+#### Creating assets
+
 You can create assets really easily like so:
 ```php
 \AdrHumphreys\Fixtures\ReferenceManager::findOrMakeAsset('my-asset-id', 'file/path.jpg');
