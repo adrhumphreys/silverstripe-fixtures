@@ -43,13 +43,16 @@ class Loader
      */
     private $orderFixturesByDependencies = false;
 
-    /*
+    /**
      * Find fixtures classes in a given directory and load them.
+     *
+     * @param string $directory - directory to search for fixtures
+     * @param string|null $pattern - optional pattern to match classname - follows preg_match syntax
      */
-    public function loadFromDirectory(string $directory): void
+    public function loadFromDirectory(string $directory, ?string $pattern = null): void
     {
         if (!is_dir($directory)) {
-            throw new InvalidArgumentException(sprintf('"%s" does not exist', $dir));
+            throw new InvalidArgumentException(sprintf('"%s" does not exist', $directory));
         }
 
         $iterator = new RecursiveIteratorIterator(
@@ -79,10 +82,29 @@ class Loader
             $reflClass = new ReflectionClass($className);
             $sourceFile = $reflClass->getFileName();
 
-            if (!in_array($sourceFile, $includedFiles)
+            if (
+                !in_array($sourceFile, $includedFiles)
                 || $reflClass->isAbstract()
-                || !is_subclass_of($className, FixtureInterface::class)) {
+                || !is_subclass_of($className, FixtureInterface::class)
+            ) {
                 continue;
+            }
+
+            // apply filter
+            if ($pattern !== null) {
+                $match = preg_match($pattern, $className);
+
+                if ($match !== 1) {
+                    continue;
+                }
+
+                Logger::green(
+                    sprintf(
+                        'class "%s" matches filter: "%s"',
+                        $className,
+                        $pattern
+                    )
+                );
             }
 
             $this->addFixture($className);
@@ -102,8 +124,10 @@ class Loader
 
         $fixture = new $fixtureClass();
 
-        if ($fixture instanceof OrderedFixtureInterface
-            && $fixture instanceof DependentFixtureInterface) {
+        if (
+            $fixture instanceof OrderedFixtureInterface
+            && $fixture instanceof DependentFixtureInterface
+        ) {
             throw new InvalidArgumentException(sprintf(
                 'Class "%s" can\'t implement "%s" and "%s" at the same time.',
                 $fixtureClass,
