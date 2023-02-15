@@ -17,7 +17,7 @@ class ReferenceManager
     /**
      * @var array
      */
-    private $references = [];
+    private array $references = [];
 
     public static function addReference(string $identifier, object $reference): void
     {

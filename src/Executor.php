@@ -9,7 +9,7 @@ class Executor
     /**
      * @var Purger
      */
-    private $purger;
+    private Purger $purger;
 
     /**
      * Executor constructor.

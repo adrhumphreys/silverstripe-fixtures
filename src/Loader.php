@@ -20,28 +20,28 @@ class Loader
      *
      * @var array
      */
-    private $fixtures = [];
+    private array $fixtures = [];
 
     /**
      * Array of ordered fixture object instances.
      *
      * @var array
      */
-    private $orderedFixtures = [];
+    private array $orderedFixtures = [];
 
     /**
      * Determines if we must order fixtures by number
      *
      * @var bool
      */
-    private $orderFixturesByNumber = false;
+    private bool $orderFixturesByNumber = false;
 
     /**
      * Determines if we must order fixtures by its dependencies
      *
      * @var bool
      */
-    private $orderFixturesByDependencies = false;
+    private bool $orderFixturesByDependencies = false;
 
     /**
      * Find fixtures classes in a given directory and load them.
