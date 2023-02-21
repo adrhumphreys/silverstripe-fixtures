@@ -29,17 +29,17 @@ class Purger
      *
      * @var string[]
      */
-    private static $excludedTables = [];
+    private static array $excludedTables = [];
 
     /**
      * @var string[] - Used internally to not truncate multiple tables multiple times
      */
-    private $clearedTables = [];
+    private array $clearedTables = [];
 
     /**
      * @var string[] - Used internally to not clear classes multiple times
      */
-    private $clearedClasses = [];
+    private array $clearedClasses = [];
 
     public function purgeFixture(FixtureInterface $fixture): void
     {

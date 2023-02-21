@@ -11,7 +11,7 @@ class KahnSorter
     /**
      * @var array[]
      */
-    private $nodes = [];
+    private array $nodes = [];
 
     /**
      * Example input:

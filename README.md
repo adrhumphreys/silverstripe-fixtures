@@ -4,8 +4,8 @@ Fixtures for all mixtures 👋
 
 ## Requirements
 
-* SilverStripe ^4.0
-* PHP ^7.3
+* SilverStripe ^4.0 || ^5.0
+* PHP ^7.4 || ^8.0
 
 ## Installation
 ```
