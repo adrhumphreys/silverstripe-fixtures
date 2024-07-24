@@ -7,6 +7,11 @@ Fixtures for all mixtures 👋
 * SilverStripe ^4.0 || ^5.0
 * PHP ^7.4 || ^8.0
 
+## Dev requirements
+
+* `phpunit/phpunit` ^9.5
+* `squizlabs/php_codesniffer` ^3.0
+
 ## Installation
 ```
 composer require adrhumphreys/silverstripe-fixtures dev-master
