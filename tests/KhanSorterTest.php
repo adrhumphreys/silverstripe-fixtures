@@ -2,11 +2,10 @@
 
 namespace AdrHumphreys\Fixtures\Tests;
 
-
 use AdrHumphreys\Fixtures\KahnSorter;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class KhanSorterTest extends PHPUnit_Framework_TestCase
+class KhanSorterTest extends TestCase
 {
     public function testSorter()
     {
