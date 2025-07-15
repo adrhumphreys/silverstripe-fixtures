@@ -4,12 +4,12 @@ Fixtures for all mixtures 👋
 
 ## Requirements
 
-* SilverStripe ^4.0 || ^5.0
-* PHP ^7.4 || ^8.0
+* SilverStripe ^6
+* PHP ^8.3
 
 ## Dev requirements
 
-* `phpunit/phpunit` ^9.5
+* `phpunit/phpunit` ^11.5
 * `squizlabs/php_codesniffer` ^3.0
 
 ## Installation
@@ -34,7 +34,7 @@ If you are installing this as a dev dependency then **all** your fixtures will n
 ## How to use
 The default setup is to run this as a task like so:
 ```
-vendor/bin/sake dev/tasks/load-fixtures directory=app/src/fixtures
+vendor/bin/sake tasks:load-fixtures --directory=app/fixtures
 ```
 
 You'll need to create your fixtures in the directory specified. Or you can implement your own task, look at the task `LoadFixtures` as an example. You can change `->loadFromDirectory` to multiple calls of `->loadFixture($fixtureClassName)`
@@ -177,17 +177,17 @@ class PageFixtureTwo extends AbstractFixture implements TestOnly
 ### Only running creation/purging
 Run the task without purging:
 ```
-vendor/bin/sake dev/tasks/load-fixtures directory=app/src/fixtures append=true
+vendor/bin/sake tasks:load-fixtures --directory=app/fixtures --append=true
 ```
 
 Purge the data:
 ```
-vendor/bin/sake dev/tasks/load-fixtures directory=app/src/fixtures purgeOnly=true
+vendor/bin/sake tasks:load-fixtures --directory=app/src/fixtures --onlyPurge=true
 ```
 
 Do literally nothing:
 ```
-vendor/bin/sake dev/tasks/load-fixtures directory=app/src/fixtures purgeOnly=true append=true
+vendor/bin/sake tasks:load-fixtures --directory=app/src/fixtures --onlyPurge=true --append=true
 ```
 
 ### Quality of life functionality:
@@ -197,7 +197,7 @@ vendor/bin/sake dev/tasks/load-fixtures directory=app/src/fixtures purgeOnly=tru
 You can selectively run fixtures using the filter param:
 
 ```bash
-vendor/bin/sake dev/tasks/load-fixtures directory=app/src/fixtures filter=/PageFixtureTwo/
+vendor/bin/sake tasks:load-fixtures --directory=app/src/fixtures --filter=/PageFixtureTwo/
 ```
 
 This will run any fixture matching the filter pattern *and any [dependencies](#dependant-fixtures)*. Note that you may filter out [ordered fixtures](#ordered-fixtures) and these won't be automatically resolved like dependencies.
